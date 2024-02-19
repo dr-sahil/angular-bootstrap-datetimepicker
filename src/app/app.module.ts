@@ -6,6 +6,7 @@ import {DlDateTimeInputModule} from '../lib';
 import {DlDateTimePickerModule} from '../lib';
 
 import {AppComponent} from './app.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {AppComponent} from './app.component';
     FormsModule,
     DlDateTimeDateModule,
     DlDateTimePickerModule,
-    DlDateTimeInputModule
+    DlDateTimeInputModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

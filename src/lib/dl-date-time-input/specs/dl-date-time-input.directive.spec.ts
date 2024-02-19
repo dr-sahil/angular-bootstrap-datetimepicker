@@ -2,7 +2,7 @@ import {Component, DebugElement, ViewChild} from '@angular/core';
 import {ComponentFixture, fakeAsync, flush, TestBed, tick} from '@angular/core/testing';
 import {FormsModule, NgForm} from '@angular/forms';
 import {By} from '@angular/platform-browser';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import {
   DL_DATE_TIME_DISPLAY_FORMAT_DEFAULT,
   DlDateTimeInputDirective,
@@ -59,11 +59,11 @@ describe('DlDateTimeInputDirective', () => {
       inputElement.value = '2018-10-01';
       inputElement.dispatchEvent(new Event('input'));
       fixture.detectChanges();
-      expect(component.dateValue).toEqual(moment('2018-10-01').valueOf());
+      expect(component.dateValue).toEqual(dayjs('2018-10-01').valueOf());
     });
 
     it('should be displayed using default format', fakeAsync(() => {
-      const octoberFirst = moment('2018-10-01');
+      const octoberFirst = dayjs('2018-10-01');
       const expectedValue = octoberFirst.format(DL_DATE_TIME_DISPLAY_FORMAT_DEFAULT);
       component.dateValue = octoberFirst.valueOf();
       fixture.detectChanges();
@@ -113,7 +113,7 @@ describe('DlDateTimeInputDirective', () => {
       inputElement.dispatchEvent(new Event('blur'));
       fixture.detectChanges();
 
-      expect(inputElement.value).toBe(moment('2001-01-01').format(DL_DATE_TIME_DISPLAY_FORMAT_DEFAULT));
+      expect(inputElement.value).toBe(dayjs('2001-01-01').format(DL_DATE_TIME_DISPLAY_FORMAT_DEFAULT));
     }));
 
     it('should not reformat invalid dates on blur', () => {
@@ -138,7 +138,7 @@ describe('DlDateTimeInputDirective', () => {
     });
 
     it('should add ng-invalid on invalid input', fakeAsync(() => {
-      const novemberFirst = moment('2018-11-01');
+      const novemberFirst = dayjs('2018-11-01');
       component.dateValue = novemberFirst.valueOf();
       fixture.detectChanges();
       flush();
@@ -183,9 +183,9 @@ describe('DlDateTimeInputDirective', () => {
     });
 
     it('should add ng-invalid for input of filtered out date', () => {
-      const expectedErrorValue = moment('2018-10-29T17:00').valueOf();
+      const expectedErrorValue = dayjs('2018-10-29T17:00').valueOf();
 
-      const allowedValue = moment('2019-10-29T17:00').valueOf();
+      const allowedValue = dayjs('2019-10-29T17:00').valueOf();
 
       spyOn(component, 'dateTimeFilter').and.callFake((date: number) => {
         return date === allowedValue;
@@ -208,7 +208,7 @@ describe('DlDateTimeInputDirective', () => {
       // This is to fix #448, inputting a value that is a disallowed date (but a valid date)
       // should change to ng-valid when the model is updated to an allowed date.
 
-      const allowedValue = moment('2019-10-29T17:00').valueOf();
+      const allowedValue = dayjs('2019-10-29T17:00').valueOf();
       spyOn(component, 'dateTimeFilter').and.callFake((date: number) => {
         return date === allowedValue;
       });
@@ -234,7 +234,7 @@ describe('DlDateTimeInputDirective', () => {
       // This is to fix #448, inputting a completely invalid date value (i.e not a date at all)
       // should change to ng-valid when the model is updated to an allowed date.
 
-      const allowedValue = moment('2019-10-29T17:00').valueOf();
+      const allowedValue = dayjs('2019-10-29T17:00').valueOf();
       spyOn(component, 'dateTimeFilter').and.callFake((date: number) => {
         return date === allowedValue;
       });

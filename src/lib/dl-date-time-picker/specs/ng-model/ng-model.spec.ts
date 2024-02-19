@@ -14,7 +14,7 @@ import {By} from '@angular/platform-browser';
 import {DlDateTimeNumberModule, DlDateTimePickerComponent, DlDateTimePickerModule} from '../../../public-api';
 import {dispatchKeyboardEvent, ENTER, SPACE} from '../dispatch-events';
 import {JAN} from '../month-constants';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 @Component({
   template: '<dl-date-time-picker [(ngModel)]="selectedDate" startView="year" minView="year"></dl-date-time-picker>'
@@ -99,7 +99,7 @@ describe('DlDateTimePickerComponent', () => {
     });
 
     it('should store the value in ngModel when clicking a .dl-abdtp-year', () => {
-      const startYear = (Math.trunc(moment().year() / 10) * 10);
+      const startYear = (Math.trunc(dayjs().year() / 10) * 10);
       const yearElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-year'));
       yearElements[9].nativeElement.click(); // 2019-01-01
       fixture.detectChanges();
@@ -108,7 +108,7 @@ describe('DlDateTimePickerComponent', () => {
     });
 
     it('should store the value internally when clicking a .dl-abdtp-year', function () {
-      const startYear = (Math.trunc(moment().year() / 10) * 10);
+      const startYear = (Math.trunc(dayjs().year() / 10) * 10);
       const changeSpy = jasmine.createSpy('change listener');
       component.picker.change.subscribe(changeSpy);
 

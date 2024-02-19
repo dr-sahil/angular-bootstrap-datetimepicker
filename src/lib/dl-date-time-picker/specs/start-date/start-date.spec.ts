@@ -13,7 +13,7 @@ import {FormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
 import {DlDateTimeNumberModule, DlDateTimePickerComponent, DlDateTimePickerModule} from '../../../public-api';
 import {APR, MAY, OCT} from '../month-constants';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 @Component({
   template: '<dl-date-time-picker [startDate]="startDate" [(ngModel)]="selectedDate"></dl-date-time-picker>'
@@ -91,7 +91,7 @@ describe('DlDateTimePickerComponent startDate', () => {
     });
 
     it('should start the current date', () => {
-      expect(debugElement.query(By.css('.dl-abdtp-view-label')).nativeElement.textContent.trim()).toBe(moment().format('MMM YYYY'));
+      expect(debugElement.query(By.css('.dl-abdtp-view-label')).nativeElement.textContent.trim()).toBe(dayjs().format('MMM YYYY'));
     });
 
     it('should change to the selected date after value is set', () => {

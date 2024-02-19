@@ -11,7 +11,8 @@ import {Component, ViewChild} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 import {DlDateTimeNumberModule, DlDateTimePickerComponent, DlDateTimePickerModule} from '../../../public-api';
 import {
   dispatchKeyboardEvent,
@@ -27,6 +28,8 @@ import {
   UP_ARROW
 } from '../dispatch-events';
 import {JAN} from '../month-constants';
+
+dayjs.extend(localizedFormat);
 
 @Component({
 
@@ -93,8 +96,8 @@ describe('DlDateTimePickerComponent startView=hour', () => {
     it('should contain 1 .dl-abdtp-now element for the current hour', () => {
       const currentElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-now'));
       expect(currentElements.length).toBe(1);
-      expect(currentElements[0].nativeElement.textContent.trim()).toBe(moment().startOf('hour').format('LT'));
-      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(moment().startOf('hour').valueOf().toString());
+      expect(currentElements[0].nativeElement.textContent.trim()).toBe(dayjs().startOf('hour').format('LT'));
+      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(dayjs().startOf('hour').valueOf().toString());
     });
 
     it('should NOT contain an .dl-abdtp-now element in the previous day', () => {
@@ -118,8 +121,8 @@ describe('DlDateTimePickerComponent startView=hour', () => {
     it('should contain 1 .dl-abdtp-active element for the current hour', () => {
       const currentElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-active'));
       expect(currentElements.length).toBe(1);
-      expect(currentElements[0].nativeElement.textContent.trim()).toBe(moment().startOf('hour').format('LT'));
-      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(moment().startOf('hour').valueOf().toString());
+      expect(currentElements[0].nativeElement.textContent.trim()).toBe(dayjs().startOf('hour').format('LT'));
+      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(dayjs().startOf('hour').valueOf().toString());
     });
 
     it('should contain 1 [tabindex=1] element', () => {
@@ -128,7 +131,7 @@ describe('DlDateTimePickerComponent startView=hour', () => {
     });
 
     it('should contain 1 .dl-abdtp-selected element for the current value', () => {
-      component.picker.value = moment().startOf('hour').valueOf();
+      component.picker.value = dayjs().startOf('hour').valueOf();
       fixture.detectChanges();
 
       // Bug: The value change is not detected until there is some user interaction
@@ -141,8 +144,8 @@ describe('DlDateTimePickerComponent startView=hour', () => {
 
       const currentElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-selected'));
       expect(currentElements.length).toBe(1);
-      expect(currentElements[0].nativeElement.textContent.trim()).toBe(moment().startOf('hour').format('LT'));
-      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(moment().startOf('hour').valueOf().toString());
+      expect(currentElements[0].nativeElement.textContent.trim()).toBe(dayjs().startOf('hour').format('LT'));
+      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(dayjs().startOf('hour').valueOf().toString());
     });
   });
 
@@ -175,7 +178,7 @@ describe('DlDateTimePickerComponent startView=hour', () => {
 
       hourElements.forEach((hourElement, index) => {
         const expectedValue = expectedValues[index];
-        const ariaLabel = moment(expectedValue).format('LLL');
+        const ariaLabel = dayjs(expectedValue).format('LLL');
         expect(hourElement.attributes['dl-abdtp-value']).withContext(index.toString()).toBe(expectedValue.toString(10));
         expect(hourElement.attributes['role']).withContext(index.toString()).toBe('gridcell');
         expect(hourElement.attributes['aria-label']).withContext(index.toString()).toBe(ariaLabel);

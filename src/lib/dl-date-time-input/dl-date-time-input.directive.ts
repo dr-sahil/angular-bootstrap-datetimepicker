@@ -9,7 +9,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import {DL_DATE_TIME_DISPLAY_FORMAT, DL_DATE_TIME_INPUT_FORMATS, DlDateAdapter} from '../core/public-api';
 import {DlDateTimeInputChange} from './dl-date-time-input-change';
 
@@ -26,7 +26,7 @@ import {DlDateTimeInputChange} from './dl-date-time-input-change';
     {provide: NG_VALIDATORS, useExisting:  DlDateTimeInputDirective, multi: true}
   ]
 })
-export class DlDateTimeInputDirective<D> implements ControlValueAccessor, Validator {
+export class DlDateTimeInputDirective<D extends Date | dayjs.Dayjs> implements ControlValueAccessor, Validator {
 
   /* tslint:disable:member-ordering */
   private _filterValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -133,7 +133,7 @@ export class DlDateTimeInputDirective<D> implements ControlValueAccessor, Valida
   @HostListener('input', ['$event.target.value']) _onInput(value: string | null | undefined): void {
     const testDate = value === null || value === undefined || value === ''
       ? undefined
-      : moment(value, this._inputFormats, true);
+      : dayjs(value, this._inputFormats, true);
 
     this._isValid = testDate && testDate.isValid();
     this.value = this._isValid ? this._dateAdapter.fromMilliseconds(testDate.valueOf()) : undefined;
@@ -144,7 +144,7 @@ export class DlDateTimeInputDirective<D> implements ControlValueAccessor, Valida
    */
   private _setElementValue(value: D) {
     if (value !== null && value !== undefined) {
-      this._renderer.setProperty(this._elementRef.nativeElement, 'value', moment(value).format(this._displayFormat));
+      this._renderer.setProperty(this._elementRef.nativeElement, 'value', dayjs(value).format(this._displayFormat));
     }
   }
 

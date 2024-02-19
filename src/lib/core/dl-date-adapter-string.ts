@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import {DlDateAdapter} from './dl-date-adapter';
 import {DL_DATE_TIME_INPUT_FORMATS, DL_DATE_TIME_MODEL_FORMAT} from './dl-date-time-string-format';
 
@@ -37,7 +37,7 @@ export class DlDateAdapterString extends DlDateAdapter<string> {
    *  the specified moment in time.
    */
   fromMilliseconds(milliseconds: number): string {
-    return moment(milliseconds).format(this.modelFormat);
+    return dayjs(milliseconds).format(this.modelFormat);
   }
 
   /**
@@ -50,7 +50,7 @@ export class DlDateAdapterString extends DlDateAdapter<string> {
    */
   toMilliseconds(value: string | null): number | null {
     if (value !== undefined && value !== null) {
-      const newMoment = moment(value, this.inputFormats, true);
+      const newMoment = dayjs(value, this.inputFormats, true);
       return newMoment.isValid() ? newMoment.valueOf() : undefined;
     }
   }

@@ -22,7 +22,7 @@ provider in `app.module.ts` to use your new class.
 The display format is defined in the `DL_DATE_TIME_DISPLAY_FORMAT` token and is injected into this component
 to control the display format.
 
-`DL_DATE_TIME_DISPLAY_FORMAT` defaults to `moment`'s `lll` long date format. 
+`DL_DATE_TIME_DISPLAY_FORMAT` defaults to `dayjs`'s `lll` long date format. 
 Override `DL_DATE_TIME_DISPLAY_FORMAT` if you do not like the default format.
 
 `{provide: DL_DATE_TIME_DISPLAY_FORMAT, useValue: '<what ever format you want goes here>'}` 

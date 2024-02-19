@@ -1,21 +1,20 @@
-import moment from 'moment';
-import {Moment} from 'moment';
+import dayjs from 'dayjs';
 import {DlDateAdapter} from './dl-date-adapter';
 
 /**
- * Adapts `moment` to be usable as a date by date/time components that work with dates.
+ * Adapts `dayjs` to be usable as a date by date/time components that work with dates.
  **/
-export class DlDateAdapterMoment extends DlDateAdapter<Moment> {
+export class DlDateAdapterMoment extends DlDateAdapter<dayjs.Dayjs> {
 
   /**
-   * Create a new instance of a `moment` type from milliseconds.
+   * Create a new instance of a `dayjs` type from milliseconds.
    * @param milliseconds
    *  a time value as milliseconds (local time zone)
    * @returns
-   *  an instance of `moment` for the specified moment in time.
+   *  an instance of `dayjs` for the specified moment in time.
    */
-  fromMilliseconds(milliseconds: number): Moment {
-    return moment(milliseconds);
+  fromMilliseconds(milliseconds: number): dayjs.Dayjs {
+    return dayjs(milliseconds);
   }
 
   /**
@@ -23,9 +22,9 @@ export class DlDateAdapterMoment extends DlDateAdapter<Moment> {
    * @param value
    *  a moment or `null`.
    * @returns
-   *  a `moment.valueOf()` result for the specified `moment` or `null`
+   *  a `moment.valueOf()` result for the specified `dayjs` or `null`
    */
-  toMilliseconds(value: Moment | null): number | null {
+  toMilliseconds(value: dayjs.Dayjs | null): number | null {
     return (value) ? value.valueOf() : undefined;
   }
 }

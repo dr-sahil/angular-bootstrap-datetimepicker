@@ -11,7 +11,7 @@ import {Component, ViewChild} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import {DlDateTimeNumberModule, DlDateTimePickerComponent, DlDateTimePickerModule} from '../../../public-api';
 import {
   dispatchKeyboardEvent,
@@ -98,8 +98,8 @@ describe('DlDateTimePickerComponent', () => {
     it('should contain 1 .dl-abdtp-now element for the current year', () => {
       const currentElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-now'));
       expect(currentElements.length).toBe(1);
-      expect(currentElements[0].nativeElement.textContent.trim()).toBe(moment().year().toString());
-      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(moment().startOf('year').valueOf().toString());
+      expect(currentElements[0].nativeElement.textContent.trim()).toBe(dayjs().year().toString());
+      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(dayjs().startOf('year').valueOf().toString());
     });
 
     it('should contain 1 [tabindex=1] element', () => {
@@ -128,12 +128,12 @@ describe('DlDateTimePickerComponent', () => {
     it('should contain 1 .dl-abdtp-active element for the current year', () => {
       const activeElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-active'));
       expect(activeElements.length).toBe(1);
-      expect(activeElements[0].nativeElement.textContent.trim()).toBe(moment().year().toString());
-      expect(activeElements[0].attributes['dl-abdtp-value']).toBe(moment().startOf('year').valueOf().toString());
+      expect(activeElements[0].nativeElement.textContent.trim()).toBe(dayjs().year().toString());
+      expect(activeElements[0].attributes['dl-abdtp-value']).toBe(dayjs().startOf('year').valueOf().toString());
     });
 
     it('should contain 1 .dl-abdtp-selected element for the current year', () => {
-      component.picker.value = moment().startOf('year').valueOf();
+      component.picker.value = dayjs().startOf('year').valueOf();
       fixture.detectChanges();
 
       // Bug: The value change is not detected until there is some user interaction
@@ -146,8 +146,8 @@ describe('DlDateTimePickerComponent', () => {
 
       const selectedElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-selected'));
       expect(selectedElements.length).toBe(1);
-      expect(selectedElements[0].nativeElement.textContent.trim()).toBe(moment().year().toString());
-      expect(selectedElements[0].attributes['dl-abdtp-value']).toBe(moment().startOf('year').valueOf().toString());
+      expect(selectedElements[0].nativeElement.textContent.trim()).toBe(dayjs().year().toString());
+      expect(selectedElements[0].attributes['dl-abdtp-value']).toBe(dayjs().startOf('year').valueOf().toString());
     });
   });
 
@@ -171,7 +171,7 @@ describe('DlDateTimePickerComponent', () => {
 
     it('should contain 10 .dl-abdtp-year elements with start of year utc time as class and role of gridcell', () => {
       // Truncate the last digit from the current year to get the start of the decade
-      const startYear = (Math.trunc(moment(component.selectedDate).year() / 10) * 10);
+      const startYear = (Math.trunc(dayjs(component.selectedDate).year() / 10) * 10);
 
       const expectedValues = new Array(10)
         .fill(startYear)
@@ -472,7 +472,7 @@ describe('DlDateTimePickerComponent', () => {
       fixture.detectChanges();
 
       // Truncate the last digit from the current year to get the start of the decade
-      const startDecade = (Math.trunc(moment().year() / 10) * 10);
+      const startDecade = (Math.trunc(dayjs().year() / 10) * 10);
 
       const expectedTime = new Date(startDecade, JAN, 1).getTime();
       expect(component.picker.value).toBe(expectedTime);

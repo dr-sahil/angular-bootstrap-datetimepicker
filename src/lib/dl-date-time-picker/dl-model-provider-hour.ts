@@ -8,7 +8,7 @@
  */
 
 import {SimpleChanges} from '@angular/core';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import {DlDateTimePickerModel} from './dl-date-time-picker-model';
 import {DlModelProvider} from './dl-model-provider';
 
@@ -47,17 +47,17 @@ export class DlHourModelProvider implements DlModelProvider {
    *  the model representing the specified moment in time.
    */
   getModel(milliseconds: number, selectedMilliseconds: number): DlDateTimePickerModel {
-    const startDate = moment(milliseconds).startOf('day');
+    const startDate = dayjs(milliseconds).startOf('day');
 
     const rowNumbers = [0, 1, 2, 3, 4, 5];
     const columnNumbers = [0, 1, 2, 3];
 
-    const previousDay = moment(startDate).subtract(1, 'day');
-    const nextDay = moment(startDate).add(1, 'day');
-    const activeValue = moment(milliseconds).startOf('hour').valueOf();
+    const previousDay = dayjs(startDate).subtract(1, 'day');
+    const nextDay = dayjs(startDate).add(1, 'day');
+    const activeValue = dayjs(milliseconds).startOf('hour').valueOf();
     const selectedValue = selectedMilliseconds === null || selectedMilliseconds === undefined
       ? selectedMilliseconds
-      : moment(selectedMilliseconds).startOf('hour').valueOf();
+      : dayjs(selectedMilliseconds).startOf('hour').valueOf();
 
     return {
       viewName: 'hour',
@@ -83,9 +83,9 @@ export class DlHourModelProvider implements DlModelProvider {
 
     function rowOfHours(rowNumber) {
 
-      const currentMoment = moment();
+      const currentMoment = dayjs();
       const cells = columnNumbers.map((columnNumber) => {
-        const hourMoment = moment(startDate).add((rowNumber * columnNumbers.length) + columnNumber, 'hours');
+        const hourMoment = dayjs(startDate).add((rowNumber * columnNumbers.length) + columnNumber, 'hours');
         return {
           display: hourMoment.format('LT'),
           ariaLabel: hourMoment.format('LLL'),
@@ -116,7 +116,7 @@ export class DlHourModelProvider implements DlModelProvider {
    *  model containing an `active` `hour` one row `down` from the specified moment in time.
    */
   goDown(fromMilliseconds: number, selectedMilliseconds: number): DlDateTimePickerModel {
-    return this.getModel(moment(fromMilliseconds).add(4, 'hour').valueOf(), selectedMilliseconds);
+    return this.getModel(dayjs(fromMilliseconds).add(4, 'hour').valueOf(), selectedMilliseconds);
   }
 
   /**
@@ -134,7 +134,7 @@ export class DlHourModelProvider implements DlModelProvider {
    *  model containing an `active` `hour` one row `up` from the specified moment in time.
    */
   goUp(fromMilliseconds: number, selectedMilliseconds: number): DlDateTimePickerModel {
-    return this.getModel(moment(fromMilliseconds).subtract(4, 'hour').valueOf(), selectedMilliseconds);
+    return this.getModel(dayjs(fromMilliseconds).subtract(4, 'hour').valueOf(), selectedMilliseconds);
   }
 
   /**
@@ -152,7 +152,7 @@ export class DlHourModelProvider implements DlModelProvider {
    *  model containing an `active` `hour` one cell to the `left` of the specified moment in time.
    */
   goLeft(fromMilliseconds: number, selectedMilliseconds: number): DlDateTimePickerModel {
-    return this.getModel(moment(fromMilliseconds).subtract(1, 'hour').valueOf(), selectedMilliseconds);
+    return this.getModel(dayjs(fromMilliseconds).subtract(1, 'hour').valueOf(), selectedMilliseconds);
   }
 
   /**
@@ -170,7 +170,7 @@ export class DlHourModelProvider implements DlModelProvider {
    *  model containing an `active` `hour` one cell to the `right` of the specified moment in time.
    */
   goRight(fromMilliseconds: number, selectedMilliseconds: number): DlDateTimePickerModel {
-    return this.getModel(moment(fromMilliseconds).add(1, 'hour').valueOf(), selectedMilliseconds);
+    return this.getModel(dayjs(fromMilliseconds).add(1, 'hour').valueOf(), selectedMilliseconds);
   }
 
   /**
@@ -188,7 +188,7 @@ export class DlHourModelProvider implements DlModelProvider {
    *  model containing an `active` `hour` one day `down` from the specified moment in time.
    */
   pageDown(fromMilliseconds: number, selectedMilliseconds: number): DlDateTimePickerModel {
-    return this.getModel(moment(fromMilliseconds).add(1, 'day').valueOf(), selectedMilliseconds);
+    return this.getModel(dayjs(fromMilliseconds).add(1, 'day').valueOf(), selectedMilliseconds);
   }
 
   /**
@@ -206,7 +206,7 @@ export class DlHourModelProvider implements DlModelProvider {
    *  model containing an `active` `hour` one day `up` from the specified moment in time.
    */
   pageUp(fromMilliseconds: number, selectedMilliseconds: number): DlDateTimePickerModel {
-    return this.getModel(moment(fromMilliseconds).subtract(1, 'day').valueOf(), selectedMilliseconds);
+    return this.getModel(dayjs(fromMilliseconds).subtract(1, 'day').valueOf(), selectedMilliseconds);
   }
 
   /**
@@ -223,7 +223,7 @@ export class DlHourModelProvider implements DlModelProvider {
    *  a model with the `11:00 pm` cell in the view as the active `hour`.
    */
   goEnd(fromMilliseconds: number, selectedMilliseconds: number): DlDateTimePickerModel {
-    return this.getModel(moment
+    return this.getModel(dayjs
     (fromMilliseconds)
       .endOf('day')
       .startOf('hour')
@@ -244,6 +244,6 @@ export class DlHourModelProvider implements DlModelProvider {
    *  a model with the `midnight` cell in the view as the active `hour`.
    */
   goHome(fromMilliseconds: number, selectedMilliseconds: number): DlDateTimePickerModel {
-    return this.getModel(moment(fromMilliseconds).startOf('day').valueOf(), selectedMilliseconds);
+    return this.getModel(dayjs(fromMilliseconds).startOf('day').valueOf(), selectedMilliseconds);
   }
 }

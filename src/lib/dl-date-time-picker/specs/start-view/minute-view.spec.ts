@@ -11,7 +11,9 @@ import {Component, ViewChild} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+
 import {DlDateTimeNumberModule, DlDateTimePickerComponent, DlDateTimePickerModule} from '../../../public-api';
 import {
   dispatchKeyboardEvent,
@@ -27,6 +29,8 @@ import {
   UP_ARROW
 } from '../dispatch-events';
 import {JAN} from '../month-constants';
+
+dayjs.extend(localizedFormat);
 
 @Component({
 
@@ -93,14 +97,14 @@ describe('DlDateTimePickerComponent startView=minute', () => {
       const currentElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-now'));
       expect(currentElements.length).toBe(1);
 
-      const now = moment();
-      const startDate = moment(now).startOf('hour');
+      const now = dayjs();
+      const startDate = dayjs(now).startOf('hour');
 
       const minuteStep = 5;
 
       const minuteSteps = new Array(60 / minuteStep).fill(minuteStep).map((step, index) => index * step);
-      const minuteValues = minuteSteps.map((minutesToAdd) => moment(startDate).add(minutesToAdd, 'minutes').valueOf());
-      const currentMoment = moment(minuteValues.filter((value) => value < now.valueOf()).pop());
+      const minuteValues = minuteSteps.map((minutesToAdd) => dayjs(startDate).add(minutesToAdd, 'minutes').valueOf());
+      const currentMoment = dayjs(minuteValues.filter((value) => value < now.valueOf()).pop());
 
       expect(currentElements[0].nativeElement.textContent.trim()).toBe(currentMoment.format('LT'));
       expect(currentElements[0].attributes['dl-abdtp-value']).toBe(currentMoment.valueOf().toString());
@@ -133,14 +137,14 @@ describe('DlDateTimePickerComponent startView=minute', () => {
       const currentElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-active'));
       expect(currentElements.length).toBe(1);
 
-      const now = moment();
-      const startDate = moment(now).startOf('hour');
+      const now = dayjs();
+      const startDate = dayjs(now).startOf('hour');
 
       const minuteStep = 5;
 
       const minuteSteps = new Array(60 / minuteStep).fill(minuteStep).map((step, index) => index * step);
-      const minuteValues = minuteSteps.map((minutesToAdd) => moment(startDate).add(minutesToAdd, 'minutes').valueOf());
-      const currentMoment = moment(minuteValues.filter((value) => value < now.valueOf()).pop());
+      const minuteValues = minuteSteps.map((minutesToAdd) => dayjs(startDate).add(minutesToAdd, 'minutes').valueOf());
+      const currentMoment = dayjs(minuteValues.filter((value) => value < now.valueOf()).pop());
 
       expect(currentElements[0].nativeElement.textContent.trim()).toBe(currentMoment.format('LT'));
       expect(currentElements[0].attributes['dl-abdtp-value']).toBe(currentMoment.valueOf().toString());
@@ -150,14 +154,14 @@ describe('DlDateTimePickerComponent startView=minute', () => {
       const currentElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-active'));
       expect(currentElements.length).toBe(1);
 
-      const now = moment();
-      const startDate = moment(now).startOf('hour');
+      const now = dayjs();
+      const startDate = dayjs(now).startOf('hour');
 
       const minuteStep = 5;
 
       const minuteSteps = new Array(60 / minuteStep).fill(minuteStep).map((step, index) => index * step);
-      const minuteValues = minuteSteps.map((minutesToAdd) => moment(startDate).add(minutesToAdd, 'minutes').valueOf());
-      const currentMoment = moment(minuteValues.filter((value) => value < now.valueOf()).pop());
+      const minuteValues = minuteSteps.map((minutesToAdd) => dayjs(startDate).add(minutesToAdd, 'minutes').valueOf());
+      const currentMoment = dayjs(minuteValues.filter((value) => value < now.valueOf()).pop());
 
       component.picker.value = currentMoment.valueOf();
       fixture.detectChanges();
@@ -195,7 +199,7 @@ describe('DlDateTimePickerComponent startView=minute', () => {
 
       minuteElements.forEach((minuteElement, index) => {
         const expectedValue = expectedValues[index];
-        const ariaLabel = moment(expectedValue).format('LLL');
+        const ariaLabel = dayjs(expectedValue).format('LLL');
         expect(minuteElement.attributes['dl-abdtp-value']).withContext(index.toString()).toBe(expectedValue.toString(10));
         expect(minuteElement.attributes['role']).withContext(index.toString()).toBe('gridcell');
         expect(minuteElement.attributes['aria-label']).withContext(index.toString()).toBe(ariaLabel);

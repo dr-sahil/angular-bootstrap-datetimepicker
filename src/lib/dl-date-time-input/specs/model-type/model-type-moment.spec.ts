@@ -11,7 +11,7 @@ import {Component, DebugElement, ViewChild} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import {DlDateTimeInputDirective, DlDateTimeInputModule, DlDateTimeMomentModule} from '../../../public-api';
 
 @Component({

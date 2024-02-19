@@ -1,6 +1,7 @@
-import moment, {Moment} from 'moment';
 import {DlDateAdapterString} from './dl-date-adapter-string';
-
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import localeData from 'dayjs/plugin/localeData';
 
 /**
  * @license
@@ -17,18 +18,18 @@ describe('DlDateAdapterString', () => {
 
   describe('default configuration', () => {
     let dateAdapter: DlDateAdapterString;
-    let testMoment: Moment;
+    let testMoment: dayjs.Dayjs;
     beforeEach(() => {
-      testMoment = moment(1523077200000);
+      testMoment = dayjs(1523077200000);
       dateAdapter = new DlDateAdapterString([
-          moment.localeData().longDateFormat('lll'),
+          dayjs.localeData().longDateFormat('lll'),
           'YYYY-MM-DDTHH:mm',
           'YYYY-MM-DDTHH:mm:ss',
           'YYYY-MM-DDTHH:mm:ss.SSS',
           'YYYY-MM-DD',
           'YYYY-MM-DDTHH:mm:ss.SSS[Z]' // ISO_8601
         ],
-        moment.localeData().longDateFormat('lll')
+        dayjs.localeData().longDateFormat('lll')
       );
     });
 

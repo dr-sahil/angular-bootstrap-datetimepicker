@@ -55,7 +55,7 @@ export class DlDateTimeDateModule {
 }
 
 /**
- * Import this module to store a `moment` in the model.
+ * Import this module to store a `dayjs` in the model.
  * @internal
  */
 @NgModule({

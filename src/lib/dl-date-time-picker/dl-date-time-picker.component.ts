@@ -21,7 +21,7 @@ import {
 } from '@angular/core';
 
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import {take} from 'rxjs/operators';
 import {DlDateAdapter} from '../core/public-api';
 import {DlDateTimePickerChange} from './dl-date-time-picker-change';
@@ -377,7 +377,7 @@ export class DlDateTimePickerComponent<D> implements OnChanges, OnInit, ControlV
     if (hasValue(this.startDate)) {
       return this.startDate;
     }
-    return moment().valueOf();
+    return dayjs().valueOf();
   }
 
   /**

@@ -11,7 +11,7 @@ import {Component, ViewChild} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import {DlDateTimeNumberModule, DlDateTimePickerComponent, DlDateTimePickerModule} from '../../../public-api';
 import {
   dispatchKeyboardEvent,
@@ -91,8 +91,8 @@ describe('DlDateTimePickerComponent startView=month', () => {
     it('should contain 1 .dl-abdtp-now element for the current month', () => {
       const currentElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-now'));
       expect(currentElements.length).toBe(1);
-      expect(currentElements[0].nativeElement.textContent.trim()).toBe(moment().format('MMM'));
-      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(moment().startOf('month').valueOf().toString());
+      expect(currentElements[0].nativeElement.textContent.trim()).toBe(dayjs().format('MMM'));
+      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(dayjs().startOf('month').valueOf().toString());
     });
 
     it('should NOT contain an .dl-abdtp-now element in the previous year', () => {
@@ -121,12 +121,12 @@ describe('DlDateTimePickerComponent startView=month', () => {
     it('should contain 1 .dl-abdtp-active element for the current month', () => {
       const currentElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-active'));
       expect(currentElements.length).toBe(1);
-      expect(currentElements[0].nativeElement.textContent.trim()).toBe(moment().format('MMM'));
-      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(moment().startOf('month').valueOf().toString());
+      expect(currentElements[0].nativeElement.textContent.trim()).toBe(dayjs().format('MMM'));
+      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(dayjs().startOf('month').valueOf().toString());
     });
 
     it('should contain 1 .dl-abdtp-selected element for the current month', () => {
-      component.picker.value = moment().startOf('month').valueOf();
+      component.picker.value = dayjs().startOf('month').valueOf();
       fixture.detectChanges();
 
       // Bug: The value change is not detected until there is some user interaction
@@ -139,8 +139,8 @@ describe('DlDateTimePickerComponent startView=month', () => {
 
       const selectedElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-selected'));
       expect(selectedElements.length).toBe(1);
-      expect(selectedElements[0].nativeElement.textContent.trim()).toBe(moment().format('MMM'));
-      expect(selectedElements[0].attributes['dl-abdtp-value']).toBe(moment().startOf('month').valueOf().toString());
+      expect(selectedElements[0].nativeElement.textContent.trim()).toBe(dayjs().format('MMM'));
+      expect(selectedElements[0].attributes['dl-abdtp-value']).toBe(dayjs().startOf('month').valueOf().toString());
     });
 
   });
@@ -175,7 +175,7 @@ describe('DlDateTimePickerComponent startView=month', () => {
 
       monthElements.forEach((monthElement, index) => {
         const expectedValue = expectedValues[index];
-        const ariaLabel = moment(expectedValue).format('MMM YYYY');
+        const ariaLabel = dayjs(expectedValue).format('MMM YYYY');
         expect(monthElement.attributes['dl-abdtp-value']).withContext(index.toString()).toBe(expectedValue.toString(10));
         expect(monthElement.attributes['role']).withContext(index.toString()).toBe('gridcell');
         expect(monthElement.attributes['aria-label']).withContext(index.toString()).toBe(ariaLabel);

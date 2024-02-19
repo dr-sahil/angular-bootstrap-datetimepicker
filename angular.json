@@ -10,13 +10,16 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "dayjs"
+            ],
             "outputPath": "dist/angular-bootstrap-datetimepicker",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -118,7 +121,6 @@
         "cypress-open": {
           "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "angular-bootstrap-datetimepicker:serve",
             "watch": true,
             "headless": false
           }
@@ -135,9 +137,28 @@
               "devServerTarget": "angular-bootstrap-datetimepicker:serve:production"
             }
           }
+        },
+        "ct": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "angular-bootstrap-datetimepicker:serve",
+            "watch": true,
+            "headless": false,
+            "testingType": "component"
+          },
+          "configurations": {
+            "development": {
+              "devServerTarget": "angular-bootstrap-datetimepicker:serve:development"
+            }
+          }
         }
       }
     }
   },
-  "defaultProject": "angular-bootstrap-datetimepicker"
+  "cli": {
+    "schematicCollections": [
+      "@cypress/schematic",
+      "@schematics/angular"
+    ]
+  }
 }

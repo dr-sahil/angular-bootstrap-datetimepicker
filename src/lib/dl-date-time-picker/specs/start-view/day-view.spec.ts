@@ -11,7 +11,7 @@ import {Component, ViewChild} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsModule} from '@angular/forms';
 import {By} from '@angular/platform-browser';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import {DlDateTimeNumberModule, DlDateTimePickerComponent, DlDateTimePickerModule} from '../../../public-api';
 import {
   dispatchKeyboardEvent,
@@ -90,7 +90,7 @@ describe('DlDateTimePickerComponent startView=day', () => {
       const dayLabelElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-col-label'));
       expect(dayLabelElements.length).toBe(7);
       dayLabelElements.forEach((dayLabelElement, index) => {
-        expect(dayLabelElement.nativeElement.textContent).toBe(moment().weekday(index).format('dd'));
+        expect(dayLabelElement.nativeElement.textContent).toBe(dayjs().day(index).format('dd'));
       });
     });
 
@@ -102,8 +102,8 @@ describe('DlDateTimePickerComponent startView=day', () => {
     it('should contain 1 .dl-abdtp-now element for the current day', () => {
       const currentElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-now'));
       expect(currentElements.length).toBe(1);
-      expect(currentElements[0].nativeElement.textContent.trim()).toBe(moment().format('D'));
-      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(moment().startOf('day').valueOf().toString());
+      expect(currentElements[0].nativeElement.textContent.trim()).toBe(dayjs().format('D'));
+      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(dayjs().startOf('day').valueOf().toString());
     });
 
     it('should NOT contain an .dl-abdtp-now element in the previous month', () => {
@@ -127,8 +127,8 @@ describe('DlDateTimePickerComponent startView=day', () => {
     it('should contain 1 .dl-abdtp-active element for the current day', () => {
       const currentElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-active'));
       expect(currentElements.length).toBe(1);
-      expect(currentElements[0].nativeElement.textContent.trim()).toBe(moment().format('D'));
-      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(moment().startOf('day').valueOf().toString());
+      expect(currentElements[0].nativeElement.textContent.trim()).toBe(dayjs().format('D'));
+      expect(currentElements[0].attributes['dl-abdtp-value']).toBe(dayjs().startOf('day').valueOf().toString());
     });
 
     it('should contain 1 [tabindex=1] element', () => {
@@ -137,7 +137,7 @@ describe('DlDateTimePickerComponent startView=day', () => {
     });
 
     it('should contain 1 .dl-abdtp-selected element for the current value', () => {
-      component.picker.value = moment().startOf('day').valueOf();
+      component.picker.value = dayjs().startOf('day').valueOf();
       fixture.detectChanges();
 
       // Bug: The value change is not detected until there is some user interaction
@@ -150,8 +150,8 @@ describe('DlDateTimePickerComponent startView=day', () => {
 
       const selectedElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-selected'));
       expect(selectedElements.length).toBe(1);
-      expect(selectedElements[0].nativeElement.textContent.trim()).toBe(moment().format('D'));
-      expect(selectedElements[0].attributes['dl-abdtp-value']).toBe(moment().startOf('day').valueOf().toString());
+      expect(selectedElements[0].nativeElement.textContent.trim()).toBe(dayjs().format('D'));
+      expect(selectedElements[0].attributes['dl-abdtp-value']).toBe(dayjs().startOf('day').valueOf().toString());
     });
   });
 
@@ -204,17 +204,17 @@ describe('DlDateTimePickerComponent startView=day', () => {
 
     it('should contain 42 .dl-abdtp-day elements with start of day utc time as class and role of gridcell', () => {
 
-      const startMoment = moment(new Date(2017, DEC, 31));
+      const startMoment = dayjs(new Date(2017, DEC, 31));
       const expectedValues = new Array(42)
         .fill(0)
-        .map((zero, index) => moment(startMoment).add(zero + index, 'days').valueOf());
+        .map((zero, index) => dayjs(startMoment).add(zero + index, 'days').valueOf());
 
       const dayElements = fixture.debugElement.queryAll(By.css('.dl-abdtp-day'));
       expect(dayElements.length).toBe(42);
 
       dayElements.forEach((dayElement, index) => {
         const expectedValue = expectedValues[index];
-        const ariaLabel = moment(expectedValue).format('ll');
+        const ariaLabel = dayjs(expectedValue).format('ll');
         expect(dayElement.attributes['dl-abdtp-value']).withContext(index.toString()).toBe(expectedValue.toString(10));
         expect(dayElement.attributes['role']).withContext(index.toString()).toBe('gridcell');
         expect(dayElement.attributes['aria-label']).withContext(index.toString()).toBe(ariaLabel);

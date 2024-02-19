@@ -5,11 +5,11 @@ import {DlDateAdapter} from './dl-date-adapter';
  **/
 export class DlDateAdapterNative extends DlDateAdapter<Date> {
   /**
-   * Create a new instance of a `moment` type from milliseconds.
+   * Create a new instance of a `dayjs` type from milliseconds.
    * @param milliseconds
    *  a time value as milliseconds (local time zone)
    * @returns
-   *  an instance of `moment` for the specified moment in time.
+   *  an instance of `dayjs` for the specified moment in time.
    */
   fromMilliseconds(milliseconds: number): Date {
     return new Date(milliseconds);

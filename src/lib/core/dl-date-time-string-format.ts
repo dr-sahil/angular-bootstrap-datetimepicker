@@ -1,6 +1,10 @@
 import {InjectionToken} from '@angular/core';
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import localeData from 'dayjs/plugin/localeData';
 
-import * as moment from 'moment';
+dayjs.extend(localeData)
+dayjs.extend(localizedFormat);
 
 /**
  * InjectionToken for string dates that can be used to override default model format.
@@ -11,8 +15,7 @@ export const DL_DATE_TIME_DISPLAY_FORMAT = new InjectionToken<string>('DL_DATE_T
  * `Moment`'s long date format `lll` used as the default output format
  * for string date's
  */
-export const DL_DATE_TIME_DISPLAY_FORMAT_DEFAULT = moment.localeData().longDateFormat('lll');
-
+export const DL_DATE_TIME_DISPLAY_FORMAT_DEFAULT = dayjs().localeData().longDateFormat('lll');
 /**
  * InjectionToken for string dates that can be used to override default input formats.
  **/
@@ -36,7 +39,7 @@ export const DL_DATE_TIME_INPUT_FORMATS_DEFAULT = [
   'M/D/YY h A',
   'M/D/YY',
   DL_DATE_TIME_DISPLAY_FORMAT_DEFAULT,
-  moment.ISO_8601,
+  'YYYY-MM-DDTHH:mm:ssZ',
 ];
 
 /**
